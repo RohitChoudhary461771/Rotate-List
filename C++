@@ -1,0 +1,48 @@
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+    // 👉Brute Force .T.C O(K*N +N)  S.C O(1)
+    
+    if(k==0 or head==NULL or head->next==NULL)return head;
+        int cnt=0;
+        ListNode* temp=head;
+        while(temp!=NULL){
+            cnt++;
+            temp=temp->next;
+        }
+        k=k%cnt;
+        while(k!=0){
+            ListNode* l1=head;
+            int b=l1->val;
+            while(l1->next!=NULL){
+                int a=b;
+                b=l1->next->val;
+                l1->next->val=a;
+                l1=l1->next;
+            }
+            k--;
+            head->val=b;
+        }
+        return head;
+  ----------------------------------------------------------------------------------------------------------------------------------
+ 👉 Optimal Approach  T.C O(N)  S.C O(1)
+ 
+ if(k==0 or head==NULL or head->next==NULL)return head;
+            int cnt=1;
+            ListNode* temp=head;
+            while(temp->next!=NULL && cnt++)
+                temp=temp->next;
+
+                k=k%cnt;
+                k=cnt-k;
+        //Making Circular Linked list
+        temp->next=head;
+
+        while(k--)temp=temp->next;
+
+        head=temp->next;
+        temp->next=NULL;
+    return head;
+   
+    }
+};
